@@ -1,0 +1,67 @@
+{
+	"ImportPath": "github.com/tomkukral/registry-cleaner",
+	"GoVersion": "go1.9",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/docker/distribution",
+			"Comment": "v2.6.0-rc.1-242-gf4118485",
+			"Rev": "f4118485915abb8b163442717326597908eee6aa"
+		},
+		{
+			"ImportPath": "github.com/docker/distribution/digestset",
+			"Comment": "v2.6.0-rc.1-242-gf4118485",
+			"Rev": "f4118485915abb8b163442717326597908eee6aa"
+		},
+		{
+			"ImportPath": "github.com/docker/distribution/manifest",
+			"Comment": "v2.6.0-rc.1-242-gf4118485",
+			"Rev": "f4118485915abb8b163442717326597908eee6aa"
+		},
+		{
+			"ImportPath": "github.com/docker/distribution/manifest/schema1",
+			"Comment": "v2.6.0-rc.1-242-gf4118485",
+			"Rev": "f4118485915abb8b163442717326597908eee6aa"
+		},
+		{
+			"ImportPath": "github.com/docker/distribution/manifest/schema2",
+			"Comment": "v2.6.0-rc.1-242-gf4118485",
+			"Rev": "f4118485915abb8b163442717326597908eee6aa"
+		},
+		{
+			"ImportPath": "github.com/docker/distribution/reference",
+			"Comment": "v2.6.0-rc.1-242-gf4118485",
+			"Rev": "f4118485915abb8b163442717326597908eee6aa"
+		},
+		{
+			"ImportPath": "github.com/docker/libtrust",
+			"Rev": "aabc10ec26b754e797f9028f4589c5b7bd90dc20"
+		},
+		{
+			"ImportPath": "github.com/heroku/docker-registry-client/registry",
+			"Rev": "fd2fe803496897db70c236ee244f41487ea92ec2"
+		},
+		{
+			"ImportPath": "github.com/opencontainers/go-digest",
+			"Comment": "v1.0.0-rc1",
+			"Rev": "279bed98673dd5bef374d3b6e4b09e2af76183bf"
+		},
+		{
+			"ImportPath": "github.com/sirupsen/logrus",
+			"Comment": "v1.0.4",
+			"Rev": "d682213848ed68c0a260ca37d6dd5ace8423f5ba"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/ssh/terminal",
+			"Rev": "7d9177d70076375b9a59c8fde23d52d9c4a7ecd5"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "429f518978ab01db8bb6f44b66785088e7fba58b"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/windows",
+			"Rev": "429f518978ab01db8bb6f44b66785088e7fba58b"
+		}
+	]
+}
