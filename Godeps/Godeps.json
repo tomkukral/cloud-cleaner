@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/tomkukral/registry-cleaner",
+	"ImportPath": "github.com/tomkukral/cloud-cleaner",
 	"GoVersion": "go1.9",
 	"GodepVersion": "v79",
 	"Deps": [
