@@ -6,10 +6,10 @@ import (
 )
 
 func main() {
-	clean_registry := false
-	clean_clouformation := true
+	cleanRegistry := false
+	cleanCloudformation := true
 
-	if clean_registry {
+	if cleanRegistry {
 		url := "https://registry-1.docker.io/"
 		username := ""
 		password := ""
@@ -23,9 +23,8 @@ func main() {
 
 	}
 
-	if clean_cloudformation {
+	if cleanCloudformation {
 		cloudformation.CleanStacks()
-
 	}
 
 }
