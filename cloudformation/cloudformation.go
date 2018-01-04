@@ -37,14 +37,20 @@ func checkDelete(stack cloudformation.Stack, exceptions []string) bool {
 func loadExceptions() []string {
 	filename := "stack_exceptions"
 	cont, err := ioutil.ReadFile(filename)
-
 	if err != nil {
 		panic(err)
-	} else {
-		return strings.Split(string(cont), "\n")
 	}
 
-	return []string{}
+	raw := strings.Split(string(cont), "\n")
+	output := make([]string, 0)
+
+	for _, value := range raw {
+		if value != "" {
+			output = append(output, value)
+		}
+	}
+
+	return output
 }
 
 func CleanStacks(dryRun bool) {
