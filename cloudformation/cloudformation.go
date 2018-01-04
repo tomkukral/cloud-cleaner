@@ -10,29 +10,65 @@ import (
 	"github.com/aws/aws-sdk-go/service/cloudformation"
 )
 
-func checkDelete(stack cloudformation.Stack) bool {
-	nameRegexp := "^jenkins-"
+func stringInSlice(a string, list []string) bool {
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
+}
+
+func checkDelete(stack cloudformation.Stack, exceptions []string) bool {
 	ageHours := 24
 
-	// check name
-	nameMatches, err := regexp.MatchString(nameRegexp, *stack.StackName)
-	if err != nil {
-		fmt.Println("Failed to match stack name:", err)
-		return false
-	}
+	// check stack in exceptions
+	exceptionMatches := stringInSlice(*stack.StackName, exceptions)
 
 	// check for age
 	now := time.Now()
 	age := now.Sub(*stack.CreationTime)
 	ageMatches := age.Hours() >= float64(ageHours)
 
-	return nameMatches && ageMatches
+	return ageMatches && !exceptionMatches
 }
 
-func CleanStacks() {
+func loadExceptions() []string {
+	filename := "stack_exceptions"
+	cont, err := ioutil.ReadFile(filename)
+
+	if err != nil {
+		panic(err)
+	} else {
+		return strings.Split(string(cont), "\n")
+	}
+
+	return []string{}
+}
+
+func CleanStacks(dryRun bool) {
+
+	if dryRun {
+		fmt.Println("Dry run is active, not stack will be deleted ...")
+	}
 
 	profile := "mi"
-	region := "eu-central-1"
+	regions := [2]string{
+		"eu-central-1",
+		"us-west-2",
+	}
+
+	exceptions := loadExceptions()
+	fmt.Println(exceptions)
+
+	for _, region := range regions {
+		fmt.Println(region)
+		CleanRegion(profile, region, exceptions, dryRun)
+	}
+
+}
+
+func CleanRegion(profile string, region string, exceptions []string, dryRun bool) {
 
 	sess, err := session.NewSessionWithOptions(session.Options{
 		Profile: profile,
