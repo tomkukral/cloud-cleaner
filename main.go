@@ -24,7 +24,7 @@ func main() {
 	}
 
 	if cleanCloudformation {
-		cloudformation.CleanStacks(true)
+		cloudformation.CleanStacks(false)
 	}
 
 }

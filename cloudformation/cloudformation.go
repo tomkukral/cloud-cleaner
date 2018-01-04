@@ -2,7 +2,8 @@ package cloudformation
 
 import (
 	"fmt"
-	"regexp"
+	"io/ioutil"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -59,10 +60,13 @@ func CleanStacks(dryRun bool) {
 	}
 
 	exceptions := loadExceptions()
-	fmt.Println(exceptions)
+	fmt.Printf("Stack exceptions:\n")
+	for _, stackName := range exceptions {
+		fmt.Printf(" * %s\n", stackName)
+	}
 
 	for _, region := range regions {
-		fmt.Println(region)
+		fmt.Printf("Cleaning stacks in region: %s\n", region)
 		CleanRegion(profile, region, exceptions, dryRun)
 	}
 
@@ -76,7 +80,7 @@ func CleanRegion(profile string, region string, exceptions []string, dryRun bool
 	})
 
 	if err != nil {
-		fmt.Println("fuck")
+		fmt.Println("failed")
 		return
 	}
 
@@ -93,16 +97,18 @@ func CleanRegion(profile string, region string, exceptions []string, dryRun bool
 	for i := 0; i < len(res.Stacks); i++ {
 		stack := res.Stacks[i]
 
-		if checkDelete(*stack) {
-			fmt.Println("Deleting", *stack.StackName)
+		if checkDelete(*stack, exceptions) {
+			fmt.Println(" * deleting", *stack.StackName)
 
-			deleteInput := cloudformation.DeleteStackInput{
-				StackName: stack.StackName,
-			}
+			if !dryRun {
+				deleteInput := cloudformation.DeleteStackInput{
+					StackName: stack.StackName,
+				}
 
-			_, err := cfn.DeleteStack(&deleteInput)
-			if err != nil {
-				fmt.Println("Failed to delete stack", *stack.StackName, err)
+				_, err := cfn.DeleteStack(&deleteInput)
+				if err != nil {
+					fmt.Println("  FAILED to delete stack", *stack.StackName, err)
+				}
 			}
 
 		}
