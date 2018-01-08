@@ -60,7 +60,7 @@ func CleanStacks(dryRun bool) {
 	}
 
 	profile := "mi"
-	regions := [2]string{
+	regions := [...]string{
 		"eu-central-1",
 		"us-west-2",
 	}
@@ -107,6 +107,8 @@ func CleanRegion(profile string, region string, exceptions []string, dryRun bool
 			fmt.Println(" * deleting", *stack.StackName)
 
 			if !dryRun {
+				time.Sleep(3000 * time.Millisecond)
+
 				deleteInput := cloudformation.DeleteStackInput{
 					StackName: stack.StackName,
 				}
