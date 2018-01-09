@@ -3,6 +3,10 @@ package cloudformation
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
+	"os"
+	"path"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -36,7 +40,16 @@ func checkDelete(stack cloudformation.Stack, exceptions []string) bool {
 
 func loadExceptions() []string {
 	filename := "stack_exceptions"
-	cont, err := ioutil.ReadFile(filename)
+
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	filepath := path.Join(dir, filename)
+	fmt.Printf("Reading exceptions from %s\n", filepath)
+
+	cont, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		panic(err)
 	}
