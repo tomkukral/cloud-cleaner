@@ -1,9 +1,18 @@
 package main
 
 import (
+	"flag"
+
 	"github.com/tomkukral/cloud-cleaner/cloudformation"
 	"github.com/tomkukral/cloud-cleaner/registry"
 )
+
+var dryRun bool
+
+func init() {
+	flag.BoolVar(&dryRun, "dryrun", true, "Use dry run - don't do any real action")
+	flag.Parse()
+}
 
 func main() {
 	cleanRegistry := false
@@ -24,7 +33,7 @@ func main() {
 	}
 
 	if cleanCloudformation {
-		cloudformation.CleanStacks(false)
+		cloudformation.CleanStacks(dryRun)
 	}
 
 }
